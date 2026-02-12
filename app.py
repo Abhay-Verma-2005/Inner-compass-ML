@@ -1,0 +1,73 @@
+import os
+from flask import Flask, request, jsonify, render_template
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import LabelEncoder
+
+app = Flask(__name__)
+
+def train_model():
+    try:
+        df = pd.read_csv('Mental Health.csv')
+        features = ['Gender', 'Occupation', 'Days_Indoors', 'Growing_Stress', 
+                    'Changes_Habits', 'Mental_Health_History', 'Mood_Swings']
+        
+        encoders = {}
+        for col in features:
+            le = LabelEncoder()
+            df[col] = le.fit_transform(df[col].astype(str))
+            encoders[col] = le
+            
+        X = df[features]
+        y = df['Grade']
+        
+        model = DecisionTreeClassifier(max_depth=5)
+        model.fit(X, y)
+        return model, encoders
+    except Exception as e:
+        print(f"Error loading model: {e}")
+        return None, None
+
+ml_model, encoders = train_model()
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.json
+    if not ml_model:
+        return jsonify({"score": 5.0, "label": "Model Not Loaded", "color": "text-slate-400"})
+    
+    try:
+        input_data = pd.DataFrame([{
+            'Gender': data.get('gender', 'Female'),
+            'Occupation': data.get('occupation', 'Corporate'),
+            'Days_Indoors': data.get('daysIndoors', '1-14 days'),
+            'Growing_Stress': 'Yes' if data.get('moodSwings') else 'No',
+            'Changes_Habits': 'Yes' if data.get('changeHabits') else 'No',
+            'Mental_Health_History': 'Yes' if data.get('healthHistory') else 'No',
+            'Mood_Swings': 'Medium' if data.get('moodSwings') else 'Low'
+        }])
+
+        for col in input_data.columns:
+            input_data[col] = encoders[col].transform(input_data[col].astype(str))
+
+        prediction_score = ml_model.predict(input_data)[0]
+        sentiment_mod = data.get('sentimentImpact', 0)
+        final_score = max(1, min(10, round(prediction_score + sentiment_mod, 1)))
+
+        if final_score >= 8.5: label, color = "Optimal Wellbeing", "text-indigo-600"
+        elif final_score >= 7: label, color = "Good Mental Health", "text-blue-600"
+        elif final_score >= 5.5: label, color = "Fair - Moderate Stress", "text-amber-600"
+        elif final_score >= 3.5: label, color = "Significant Concern", "text-orange-600"
+        else: label, color = "Clinical Distress", "text-rose-600"
+
+        return jsonify({"score": final_score, "label": label, "color": color})
+    except Exception:
+        return jsonify({"score": 5.0, "label": "Prediction Error", "color": "text-slate-400"})
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
