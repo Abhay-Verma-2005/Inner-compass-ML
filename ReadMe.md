@@ -28,14 +28,24 @@ mindcore-app/
 ## Previews
 
 <p align="center">
-  <img src="previews/preview1.PNG" alt="Preview 1" width="400" style="border: 2px solid #ccc; margin-right: 10px;" />
-  <img src="previews/preview2.PNG" alt="Preview 2" width="400" style="border: 2px solid #ccc;" />
+  <span style="display: inline-block; text-align: center; margin-right: 30px;">
+    <img src="previews/preview1.PNG"
+         alt="Preview 1"
+         width="400"
+         height="250"
+         style="border: 2px solid #ccc; object-fit: cover;" /><br/>
+  </span>
+
+  <span style="display: inline-block; text-align: center;">
+    <img src="previews/preview2.PNG"
+         alt="Preview 2"
+         width="400"
+         height="250"
+         style="border: 2px solid #ccc; object-fit: cover;" /><br/>
+  </span>
 </p>
 
-<p align="center">
-  <b>Preview 1</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <b>Preview 2</b>
-</p>
+
 
 
 
