@@ -25,7 +25,6 @@ def train_model():
         model.fit(X, y)
         return model, encoders
     except Exception as e:
-        print(f"Error loading model: {e}")
         return None, None
 
 ml_model, encoders = train_model()
@@ -56,7 +55,7 @@ def predict():
 
         prediction_score = ml_model.predict(input_data)[0]
         sentiment_mod = data.get('sentimentImpact', 0)
-        final_score = max(1, min(10, round(prediction_score + sentiment_mod, 1)))
+        final_score = max(1, min(10, round(float(prediction_score) + sentiment_mod, 1)))
 
         if final_score >= 8.5: label, color = "Optimal Wellbeing", "text-indigo-600"
         elif final_score >= 7: label, color = "Good Mental Health", "text-blue-600"
