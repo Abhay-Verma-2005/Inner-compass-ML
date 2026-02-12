@@ -28,8 +28,8 @@ mindcore-app/
 ## Previews
 
 <p align="center">
-  <img src="previews/preview1.png" alt="Preview 1" width="400" style="border: 2px solid #ccc; margin-right: 10px;" />
-  <img src="previews/preview2.png" alt="Preview 2" width="400" style="border: 2px solid #ccc;" />
+  <img src="previews/preview1.PNG" alt="Preview 1" width="400" style="border: 2px solid #ccc; margin-right: 10px;" />
+  <img src="previews/preview2.PNG" alt="Preview 2" width="400" style="border: 2px solid #ccc;" />
 </p>
 
 <p align="center">
