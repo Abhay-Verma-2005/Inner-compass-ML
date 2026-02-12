@@ -1,13 +1,11 @@
-## 🧠 Core Features & Logic
-
-### 1. The ML Brain (Decision Tree)
-
-The app uses a **Decision Tree Classifier** to analyze lifestyle patterns. Unlike simple formulas, this algorithm "learns" from the CSV data. It creates a hierarchy of importance—for example, it might prioritize **Mental_Health_History** and **Days_Indoors** as the strongest indicators of current wellbeing. By splitting data into "branches," it predicts a base health **Grade** from 1 to 10.
+## Inner Compass (Mental Health Predictor ) :
+### 1. OverView : 
+This web app uses a **Decision Tree Classifier** to analyze lifestyle patternsfrom Sample Data. Unlike simple formulas, this algorithm "learns" from the CSV data. It creates a hierarchy of importance—for example, it might prioritize **Mental_Health_History** and **Days_Indoors** as the strongest indicators of current wellbeing. By splitting data into "branches," it predicts a base health **Grade** from 1 to 10.
 While the ML handles historical patterns, the **JavaScript Sentiment Engine** handles the "now." It parses user text against a library of 200+ keywords.
 * **Positive Boost:** Words like *resilient* or *grateful* increase the score.
 * **Stress Penalty:** Words like *suffocated* or *fatigue* decrease it.
 
-### 2. Feature Set
+### 2. Feature Set :
 
 The model focuses on high-impact markers identified in the CSV:
 
